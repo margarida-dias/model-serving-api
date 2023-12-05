@@ -1,19 +1,19 @@
 import json
+import pickle
 import typing
 from pathlib import Path
 
-import joblib
 import numpy as np
 from mlserver import MLModel
 from mlserver.codecs import NumpyCodec
 from mlserver.types import InferenceRequest, InferenceResponse, ResponseOutput, Parameters
-from mlserver.utils import get_model_uri
 
 
 class ServingApi(MLModel):
     async def load(self) -> bool:
 
-        self._model = joblib.load(Path("./model.pkl"))
+        with open(Path("./model.pkl"), 'rb') as model:
+            self.model = pickle.load(model)
 
         print("Model loaded")
 

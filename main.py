@@ -20,6 +20,6 @@ if __name__ == "__main__":
     local_endpoint = "http://localhost:8080/v2/models/model-serving-api/infer"
     response = requests.post(local_endpoint, json=inference_request)
 
-    print(response)
+    print(response.json())
 
     local_endpoint = "http://localhost:8080/v2/models/model-serving-api/infer"
