@@ -1,4 +1,4 @@
-"""`rescorer.logger` module."""
+"""`SERVINGAPI.logger` module."""
 
 import logging
 import logging.config

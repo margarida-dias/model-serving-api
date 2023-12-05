@@ -1,6 +1,6 @@
 {
-    "name": "model-serving-api",
-    "implementation": "servingapi.runtime.ServingAPI",
+    "name": "servingapi",
+    "implementation": "runtime.ServingApi",
     "parameters": {
-        "uri": "./model/model.pkl"
+        "uri": "./model.pkl"
     }}

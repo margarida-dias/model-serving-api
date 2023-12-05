@@ -1,42 +1,23 @@
 import json
-import logging
-import os
 import typing
-import uuid
+from pathlib import Path
 
-import httpx
-import numpy
+import joblib
 import numpy as np
-import numpy.typing
-import orjson
-from click import types
-from fastapi.responses import PlainTextResponse
+from mlserver import MLModel
 from mlserver.codecs import NumpyCodec
-from mlserver.errors import InferenceError
-from mlserver.handlers import custom_handler
 from mlserver.types import InferenceRequest, InferenceResponse, ResponseOutput, Parameters
-from mlserver_sklearn import SKLearnModel
+from mlserver.utils import get_model_uri
 
 
-class ServingApi(SKLearnModel):  # type: ignore
-
-    RESCORER_DEFAULT_SCORE_VALUE_FAILURE = -1.0
-    RESCORER_EXIT_FAILURE = 1
-    RESCORER_MONITORING_METRICS_TIMEOUT = 0.2
-    RESCORER_REQUEST_MIN_INPUTS = 1
-    RESCORER_SETTINGS_PATH = os.environ["RESCORER_SETTINGS_PATH"]
-    RESCORER_LOG_LEVEL = os.environ.get("RESCORER_LOG_LEVEL", "INFO")
-
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
+class ServingApi(MLModel):
     async def load(self) -> bool:
 
-        self.model = await super().load()
+        self._model = joblib.load(Path("./model.pkl"))
 
-        logging.info(f"[load] Model ready: {self.model}")
+        print("Model loaded")
 
-        return self.model
+        return True
 
     async def predict(self, payload: InferenceRequest) -> InferenceResponse:
         request = self.decode(payload.inputs[0], default_codec=NumpyCodec)
@@ -116,8 +97,7 @@ class ServingApi(SKLearnModel):  # type: ignore
     #     try:
     #
     #         # mlserver.types.dataplane.Parameters allows custom params.
-    #         # TODO: move to inputs.
-    #         # TODO: consider using NumpyCodec to parse input
+    #
     #
     #         country = request.parameters.ffcountrycode
     #         featureset = request.parameters.featureset

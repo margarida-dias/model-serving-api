@@ -34,5 +34,5 @@ tests:
 ci: linter tests
 
 run:
-	poetry shell && $(shell cat .env | xargs) newrelic-admin run-program mlserver start rescorerserving
+	poetry shell && $(shell cat .env | xargs) newrelic-admin run-program mlserver start SERVINGAPIserving
 
