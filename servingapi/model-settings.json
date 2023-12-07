@@ -1,6 +1,0 @@
-{
-    "name": "servingapi",
-    "implementation": "runtime.ServingApi",
-    "parameters": {
-        "uri": "./model.pkl"
-    }}

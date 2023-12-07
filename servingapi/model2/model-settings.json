@@ -1,0 +1,6 @@
+{
+    "name": "model2",
+    "implementation": "runtime.Model2",
+    "parameters": {
+        "uri": "./model.pkl"
+    }}

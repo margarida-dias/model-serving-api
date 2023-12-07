@@ -9,10 +9,10 @@ from mlserver.codecs import NumpyCodec
 from mlserver.types import InferenceRequest, InferenceResponse, ResponseOutput, Parameters
 
 
-class ServingApi(MLModel):
+class Model1(MLModel):
     async def load(self) -> bool:
 
-        with open(Path("./model.pkl"), 'rb') as model:
+        with open(Path("model.pkl"), 'rb') as model:
             self.model = pickle.load(model)
 
         print("Model loaded")
@@ -50,12 +50,12 @@ class ServingApi(MLModel):
         # Get only product_ids
         product_ids = [product[0] for product in request]
 
-        # Get only boosts and ES scores for model input
+        # Get only boosts and ES scores for model1 input
         input_model = [
             [product[1], product[2]]
             for product in request]
 
-        # Use the dummy model to sum the two features.
+        # Use the dummy model1 to sum the two features.
         output_model = self.model.predict(input_model)  # type: ignore
 
         return {product_id: rank_score

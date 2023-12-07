@@ -17,7 +17,7 @@ if __name__ == "__main__":
     }
 
     # endpoint for local development
-    local_endpoint = "http://localhost:8080/v2/models/model-serving-api/infer"
+    local_endpoint = "http://localhost:8080/v2/models/model2/infer"
     response = requests.post(local_endpoint, json=inference_request)
 
     print(response.json())
